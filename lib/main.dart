@@ -1,18 +1,32 @@
 //외부라이브러리
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 //내부패키지
-import 'package:project/widgets/register.dart';
-import 'package:project/widgets/home.dart';
+import 'package:project/widgets/frames/register.dart';
+import 'package:project/widgets/frames/home.dart';
 import 'package:project/styles/mainstyle.dart';
+import 'Providers/stores.dart';
+import 'package:intl/date_symbol_data_local.dart';
 
 
+void main() async {
 
-void main() {
-  runApp(MaterialApp(
-    debugShowCheckedModeBanner: false,
-    theme: mainTheme,
-    home: const MyApp(),
+  WidgetsFlutterBinding.ensureInitialized();
+
+  await initializeDateFormatting();
+
+  runApp(
+      MultiProvider(
+    providers: [
+      ChangeNotifierProvider(create: (c) => CalendarStore(),)
+    ],
+
+    child: MaterialApp(
+      debugShowCheckedModeBanner: false,
+      theme: mainTheme,
+      home: const MyApp(),
+    ),
   ));
 }
 
@@ -42,7 +56,7 @@ class _MyAppState extends State<MyApp> {
     } else {
       showDialog(context: context, builder: (context){
         return AlertDialog(
-          title: Text("오류"),
+          title: Text("오류", style: TextStyle(fontWeight: FontWeight.w700)),
           content: Text("소환사 이름을 입력해주세요"),
           actions: [
             Row(
@@ -54,6 +68,7 @@ class _MyAppState extends State<MyApp> {
                     return;
                     },
                   child: Text("확인"),
+                  style: ElevatedButton.styleFrom(backgroundColor: Colors.black87),
                 ),
               ],
             )

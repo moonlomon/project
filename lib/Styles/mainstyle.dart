@@ -14,6 +14,6 @@ var mainTheme = ThemeData(
         elevation:10,
         selectedItemColor: Colors.white,
         unselectedItemColor: Colors.white,
-        backgroundColor: Colors.black
+        backgroundColor: Colors.black87
     )
 );

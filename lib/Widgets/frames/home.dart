@@ -2,14 +2,10 @@
 import 'package:flutter/material.dart';
 
 //내부패키지
-import 'package:project/widgets/score.dart';
-import 'package:project/widgets/detail.dart';
-import 'package:project/widgets/calendar.dart';
-import 'package:project/widgets/outro.dart';
-import 'package:project/widgets/schedule.dart';
-
-
-
+import 'package:project/widgets/bodies/score.dart';
+import 'package:project/widgets/bodies/calendar.dart';
+import 'package:project/widgets/bodies/outro.dart';
+import 'package:project/widgets/bodies/schedule.dart';
 
 
 
@@ -25,7 +21,13 @@ class HomeWigdet extends StatefulWidget {
 }
 
 class _HomeWigdetState extends State<HomeWigdet> {
-  List<dynamic> widgetSelector = [ScheduleWidget(), RecordWidget(), CalendarWidget(), OurApp()];
+  // List<dynamic> widgetSelector = [ScheduleWidget(), RecordWidget(), CalendarWidget(), OurApp()];
+  List<dynamic> widgetSelector = [
+    Text("1"),
+    Text("1"),
+    Text("1"),
+    Text("1"),
+  ];
   var tap = 0;
 
   @override
@@ -39,7 +41,7 @@ class _HomeWigdetState extends State<HomeWigdet> {
               widget.resetRegister();
             }
         ),
-        title: Text(widget.userRegister),
+        title: Text(widget.userRegister, style: TextStyle(fontWeight: FontWeight.w600)),
         centerTitle: true,
       ),
 
