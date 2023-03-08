@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:project/widgets/frames/home.dart';
+import 'package:project/widgets/containers//mainContainer.dart';
 
 class RegisterWidget extends StatelessWidget {
   const RegisterWidget({Key? key, this.setUser, this.setRegister}) : super(key: key);

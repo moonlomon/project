@@ -1,9 +1,10 @@
+//외부 라이브러리
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
 
-import '../../Providers/stores.dart';
-
+//내부 디렉토리
+import '../../../../../Providers/stores.dart';
 
 class ScheduleBottomSheet extends StatefulWidget {
   const ScheduleBottomSheet({Key? key}) : super(key: key);

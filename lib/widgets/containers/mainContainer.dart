@@ -1,11 +1,15 @@
 //외부라이브러리
 import 'package:flutter/material.dart';
 
+
 //내부패키지
-import 'package:project/widgets/bodies/score.dart';
-import 'package:project/widgets/bodies/calendar.dart';
-import 'package:project/widgets/bodies/outro.dart';
-import 'package:project/widgets/bodies/schedule.dart';
+
+import '../components/mainTemplates/calendar.dart';
+import '../components/mainTemplates/outro.dart';
+import '../components/mainTemplates/score.dart';
+import '../components/modules/main/memo.dart';
+
+
 
 
 
@@ -21,13 +25,8 @@ class HomeWigdet extends StatefulWidget {
 }
 
 class _HomeWigdetState extends State<HomeWigdet> {
-  // List<dynamic> widgetSelector = [ScheduleWidget(), RecordWidget(), CalendarWidget(), OurApp()];
-  List<dynamic> widgetSelector = [
-    Text("1"),
-    Text("1"),
-    Text("1"),
-    Text("1"),
-  ];
+  List<dynamic> widgetSelector = [ScheduleWidget(), RecordWidget(), CalendarWidget(), OurApp()];
+  // List<dynamic> widgetSelector = [Text("1"), Text("1"), Text("1"), Text("1"),];
   var tap = 0;
 
   @override

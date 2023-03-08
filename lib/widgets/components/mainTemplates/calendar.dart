@@ -1,14 +1,14 @@
 //외부 라이브러리
 import 'package:flutter/material.dart';
-import 'package:project/Widgets/Calenedar/addSchedule.dart';
-import 'package:project/Widgets/Calenedar/schedule_card.dart';
 import 'package:provider/provider.dart';
 import 'package:table_calendar/table_calendar.dart';
 
 //내부 패키지
-import '../../Providers/stores.dart';
-import '../Calenedar/main_calenedar.dart';
-import '../Calenedar/today.dart';
+import '../../../Providers/stores.dart';
+import '../modules/calenedar/calendarWidgets/addSchedule.dart';
+import '../modules/calenedar/calendarWidgets/main_calenedar.dart';
+import '../modules/calenedar/calendarWidgets/schedule_card.dart';
+import '../modules/calenedar/calendarWidgets/today.dart';
 
 
 class CalendarWidget extends StatelessWidget {

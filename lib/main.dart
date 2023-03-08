@@ -1,13 +1,14 @@
 //외부라이브러리
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:intl/date_symbol_data_local.dart';
 
 //내부패키지
-import 'package:project/widgets/frames/register.dart';
-import 'package:project/widgets/frames/home.dart';
-import 'package:project/styles/mainstyle.dart';
 import 'Providers/stores.dart';
-import 'package:intl/date_symbol_data_local.dart';
+import 'package:project/styles/mainstyle.dart';
+import 'package:project/widgets/containers/mainContainer.dart';
+import 'package:project/widgets/containers/registerPage.dart';
+
 
 
 void main() async {
