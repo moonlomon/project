@@ -5,6 +5,15 @@ class DetailPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Text("상세페이지");
+    return Container(
+      child: Column(
+        children: [
+          Container(
+            child: ,
+          ),
+          Container()
+        ],
+      ),
+    )
   }
 }

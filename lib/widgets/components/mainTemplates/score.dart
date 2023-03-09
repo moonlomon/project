@@ -54,7 +54,7 @@ class RecordWidget extends StatelessWidget {
                   ],
                 ),
                 title: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceAround,
+                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                   children: [
                     Container(
                       width: 100,
@@ -85,7 +85,7 @@ class RecordWidget extends StatelessWidget {
                       child: Text("상세",style: TextStyle(color: Colors.deepOrange)),
                       onPressed: (){
                         Navigator.push(context,
-                            CupertinoPageRoute(builder: (c)=>details())
+                            MaterialPageRoute(builder: (c)=>details())
                         );
                       },
                     )
