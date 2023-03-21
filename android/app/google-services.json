@@ -1,0 +1,82 @@
+{
+  "project_info": {
+    "project_number": "346793414426",
+    "project_id": "myteach-35a14",
+    "storage_bucket": "myteach-35a14.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:346793414426:android:d460d787985d084dc966a3",
+        "android_client_info": {
+          "package_name": "com.moon.todolist"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "346793414426-ona4jqu2e2bbtod41maj8c6jjsfn0ccr.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAjl3BoodedDaHDCnTP9Lz7WQGP2Q7r9rw"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "346793414426-ona4jqu2e2bbtod41maj8c6jjsfn0ccr.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "346793414426-43hhsmhjc3nn3m6eanp5bcbqst07qm8h.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.moon.todolist"
+              }
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:346793414426:android:f388e1663df8c207c966a3",
+        "android_client_info": {
+          "package_name": "com.myteach.project"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "346793414426-ona4jqu2e2bbtod41maj8c6jjsfn0ccr.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAjl3BoodedDaHDCnTP9Lz7WQGP2Q7r9rw"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "346793414426-ona4jqu2e2bbtod41maj8c6jjsfn0ccr.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "346793414426-43hhsmhjc3nn3m6eanp5bcbqst07qm8h.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.moon.todolist"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

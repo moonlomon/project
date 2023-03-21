@@ -1,4 +1,5 @@
 //외부 라이브러리
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:table_calendar/table_calendar.dart';
@@ -14,8 +15,13 @@ import '../modules/calenedar/calendarWidgets/today.dart';
 class CalendarWidget extends StatelessWidget {
   const CalendarWidget({Key? key}) : super(key: key);
 
+
+
+
   @override
   Widget build(BuildContext context) {
+
+
     return Scaffold(
       floatingActionButton: FloatingActionButton(
         backgroundColor: context.watch<CalendarStore>().SUB_COLOR,
@@ -57,6 +63,7 @@ class _HomeScreenState extends State<HomeScreen> {
 
   @override
   Widget build(BuildContext context) {
+
     return SafeArea(
       child: Column(
         children: [
@@ -67,7 +74,32 @@ class _HomeScreenState extends State<HomeScreen> {
             count:0
           ),
           SizedBox(height: 8.0,),
-          ScheduleCard(startTime: 12, endTime: 14, content: '코딩',)
+          Expanded(
+            child: StreamBuilder(
+              stream: context.watch<CalendarStore>().fetchFirstUser(),
+              builder: (context, snapshot) {
+                if (!snapshot.hasData) {
+                  return Container();
+                }
+                return ListView.builder(
+                  itemCount: snapshot.data!.length,
+                  itemBuilder: (c, i) {
+                    final schedule = snapshot.data![i];
+                    return Padding(
+                      padding: const EdgeInsets.only(
+                        bottom: 8.0, left: 8.0, right: 8.0
+                      ),
+                      child: ScheduleCard(
+                        startTime: schedule['starttime'],
+                        endTime: schedule['endtime'],
+                        content: schedule['content'],
+                      ),
+                    );
+                  },
+                );
+              }
+            ),
+          )
         ],
       )
     );
