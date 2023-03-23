@@ -3,6 +3,7 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:intl/date_symbol_data_local.dart';
+import 'package:get/get.dart';
 
 //내부패키지
 import 'Providers/stores.dart';
@@ -28,7 +29,7 @@ void main() async {
           ChangeNotifierProvider(create: (c) => CalendarStore(),)
         ],
 
-        child: MaterialApp(
+        child: GetMaterialApp(
           debugShowCheckedModeBanner: false,
           theme: mainTheme,
           home: const MyApp(),
@@ -72,7 +73,8 @@ class _MyAppState extends State<MyApp> {
               children: [
                 ElevatedButton(
                   onPressed: () {
-                    Navigator.of(context).pop();
+                    // Navigator.of(context).pop();
+                    Get.back();
                     return;
                   },
                   child: Text("확인"),

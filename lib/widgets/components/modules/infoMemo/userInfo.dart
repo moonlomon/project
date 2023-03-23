@@ -4,12 +4,14 @@ import 'package:provider/provider.dart';
 import '../../../../Providers/stores.dart';
 
 class userInfoWidget extends StatelessWidget {
-  const userInfoWidget({Key? key}) : super(key: key);
+  const userInfoWidget({Key? key, this.userRegister}) : super(key: key);
+
+  final userRegister;
 
   @override
   Widget build(BuildContext context) {
     return Container(
-      color: Colors.black,
+      color: Color.fromRGBO(30, 30, 30, 1.0),
       height: 200,
       child: Column(
         children: [
@@ -22,9 +24,9 @@ class userInfoWidget extends StatelessWidget {
                   padding: EdgeInsets.all(20),
                   child: Column(
                     children: [
-                      Text("우엉이우어어엉",
+                      Text("${userRegister}",
                           style: TextStyle(
-                              fontSize: 20, color: Colors.white)),
+                              fontSize: 24, fontWeight: FontWeight.w600 ,color: Colors.white)),
                       Text("레벨",
                           style: TextStyle(
                               color: Colors.white))
@@ -37,11 +39,9 @@ class userInfoWidget extends StatelessWidget {
                   padding: EdgeInsets.all(20),
                   child: CircleAvatar(
                     backgroundColor: context.watch<CalendarStore>().FRIMARY_COLOR,
-                    child: Expanded(
-                      child: IconButton(
-                        icon: Icon(Icons.refresh, color: Colors.white),
-                        onPressed: () {},
-                      ),
+                    child: IconButton(
+                      icon: Icon(Icons.refresh, color: Colors.white),
+                      onPressed: () {},
                     ),
                   ),
                 )
@@ -61,7 +61,7 @@ class userInfoWidget extends StatelessWidget {
                           CircleAvatar(
                               backgroundImage: NetworkImage(
                                   'https://seongjun2moon.github.io/tier/gold.png'),
-                              backgroundColor: Colors.black12,
+                              backgroundColor: Color.fromRGBO(30, 30, 30, 1.0),
                           ),
                           Text("티어",
                               style: TextStyle(color: Colors.white)),

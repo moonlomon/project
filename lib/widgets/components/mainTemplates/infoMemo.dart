@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:project/models/memoModels.dart';
 import 'package:project/widgets/components/modules/infoMemo/todoList.dart';
 import 'package:provider/provider.dart';
+import 'package:get/get.dart';
 
 //내부 라이브러리
 import '../../../Providers/stores.dart';
@@ -10,29 +11,38 @@ import '../modules/infoMemo/memo.dart';
 import '../modules/infoMemo/userInfo.dart';
 
 class InfoMemoMain extends StatefulWidget {
-  const InfoMemoMain({Key? key,}) : super(key: key);
+  const InfoMemoMain({Key? key, this.userRegister, this.resetRegister}) : super(key: key);
 
+  final userRegister;
+  final resetRegister;
 
   @override
   State<InfoMemoMain> createState() => _InfoMemoMainState();
 }
 
 class _InfoMemoMainState extends State<InfoMemoMain> {
-    late String title;
-    late String content;
+  late String title;
+  late String content;
+  late Color titleColor;
+
+  var scroll = ScrollController();
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    titleColor = Color.fromRGBO(30, 30, 30, 1.0);
+    scroll.addListener((){
+      setState(() {
+        titleColor = scroll.position.pixels < 50 ? Color.fromRGBO(30, 30, 30, 1.0) : Colors.white;
+      });
+    });
+  }
+
 
   @override
   Widget build(BuildContext context) {
     var memoList = context.watch<CalendarStore>().memos;
-    var scroll = ScrollController();
-
-    @override
-    void initState() {
-      super.initState();
-      scroll.addListener((){
-        print(scroll.position.pixels);
-      });
-    }
 
     return Scaffold(
       floatingActionButton: FloatingActionButton(
@@ -64,7 +74,8 @@ class _InfoMemoMainState extends State<InfoMemoMain> {
                           children: [
                             ElevatedButton(
                               onPressed: () {
-                                Navigator.of(context).pop();
+                                // Navigator.of(context).pop();
+                                Get.back();
                                 setState(() {
                                   memoList.add({'title':title, 'content':content});
                                 });
@@ -73,7 +84,8 @@ class _InfoMemoMainState extends State<InfoMemoMain> {
                             ),
                             ElevatedButton(
                               onPressed: () {
-                                Navigator.of(context).pop();
+                                // Navigator.of(context).pop();
+                                Get.back();
                               },
                               child: Text("취소"),
                             ),
@@ -86,11 +98,25 @@ class _InfoMemoMainState extends State<InfoMemoMain> {
         },
         backgroundColor: context.watch<CalendarStore>().SUB_COLOR,
       ),
+      appBar: AppBar(
+        leading: IconButton(
+            icon: Icon(Icons.arrow_back_ios_new, color: Colors.white),
+            onPressed: (){
+              widget.resetRegister();
+            }
+        ),
+        title: Text("${widget.userRegister}",
+            style: TextStyle(fontWeight: FontWeight.w600,
+                color:titleColor)),
+        centerTitle: true,
+        backgroundColor: Color.fromRGBO(30, 30, 30, 1.0),
+        elevation: 0,
+      ),
       body: CustomScrollView(
         controller: scroll,
         slivers: [
           SliverToBoxAdapter(
-            child: userInfoWidget(),
+            child: userInfoWidget(userRegister:widget.userRegister),
           ),
           SliverToBoxAdapter(
             child: TodoWidget(),
@@ -108,21 +134,25 @@ class _InfoMemoMainState extends State<InfoMemoMain> {
                       ),
                     ),
                     onTap: () {
-                      Navigator.push(context, MaterialPageRoute(builder: (_) {
-                        return MemoWidgetPage(
-                            memoList: memoList,
-                            title: memoList[i]['title'],
-                            content: memoList[i]['content'],
-                            colorNum: i);
-                      }));
+                      // Navigator.push(context, MaterialPageRoute(builder: (_) {
+                      //   return MemoWidgetPage(
+                      //       memoList: memoList,
+                      //       title: memoList[i]['title'],
+                      //       content: memoList[i]['content'],
+                      //       colorNum: i);
+                      // }));
+                      Get.to(MemoWidgetPage(
+                                memoList: memoList,
+                                title: memoList[i]['title'],
+                                content: memoList[i]['content'],
+                                colorNum: i));
                     },
                   ),
                 ),
               ),
               childCount: memoList.length,
             ),
-            gridDelegate:
-            SliverGridDelegateWithFixedCrossAxisCount(crossAxisCount: 3),
+            gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(crossAxisCount: 3),
           )
         ],
       ),

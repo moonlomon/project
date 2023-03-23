@@ -3,7 +3,9 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
+import 'package:get/get.dart';
 
 //내부 디렉토리
 import 'package:project/widgets/components/modules/calenedar/calendarWidgets/textFeild.dart';
@@ -12,7 +14,10 @@ import '../../../../../Providers/stores.dart';
 
 
 class ScheduleBottomSheet extends StatefulWidget {
-  const ScheduleBottomSheet({Key? key}) : super(key: key);
+  const ScheduleBottomSheet({Key? key, required this.lst, required this.selectedDate}) : super(key: key);
+
+  final lst;
+  final DateTime selectedDate;
 
   @override
   State<ScheduleBottomSheet> createState() => _ScheduleBottomSheetState();
@@ -115,18 +120,25 @@ class _ScheduleBottomSheetState extends State<ScheduleBottomSheet> {
     );
   }
 
-  void onSavePressed() async {
-    final firestore = FirebaseFirestore.instance;
-
+  void onSavePressed() {
     if (formKey.currentState!.validate()) {
       formKey.currentState!.save();
 
-      setState(() async {
-        await firestore.collection('schedule').add({'endtime': endTime, 'starttime': startTime, 'content' : content});
+      setState(() {
+        widget.lst.add({
+          'key': 1,
+          'date': widget.selectedDate,
+          'startTime': startTime,
+          'endTime': endTime,
+          'content': content,
+        });
       });
 
-      // context.watch<CalendarStore>().addData(startTime, endTime, content);
-      Navigator.of(context).pop();
+      print("${widget.selectedDate} 데이터 저장완료");
+      print("${widget.lst}");
+
+      // Navigator.of(context).pop();
+      Get.back();
     }
   }
 

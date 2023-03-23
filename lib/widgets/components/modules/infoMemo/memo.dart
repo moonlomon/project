@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 
 class MemoWidgetPage extends StatelessWidget {
   const MemoWidgetPage(
@@ -42,7 +43,8 @@ class MemoWidgetPage extends StatelessWidget {
                   ],
                 ),
                 onTap: () {
-                  Navigator.pop(context);
+                  // Navigator.pop(context);
+                  Get.back();
                 },
               ),
             )));

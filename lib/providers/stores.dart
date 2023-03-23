@@ -1,7 +1,18 @@
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 
+
+
 class CalendarStore extends ChangeNotifier {
+
+  late DateTime _selectedDate = DateTime.now();
+
+  DateTime get selectedDate => _selectedDate;
+
+  set selectedDate(DateTime value) {
+    _selectedDate = value;
+    notifyListeners();
+  }
 
   var RegistUser;
 
@@ -14,7 +25,6 @@ class CalendarStore extends ChangeNotifier {
   final firestore = FirebaseFirestore.instance;
 
   addData(startTime, endTime, content) async {
-    // var result = await firestore.collection('schedule').doc('gm40kp7ABsImFH8vU455').update({'endtime': 1400, 'starttime': 1200,});
     await firestore.collection('schedule').add({'endtime': endTime, 'starttime': startTime, 'content' : content});
   }
 
@@ -23,8 +33,6 @@ class CalendarStore extends ChangeNotifier {
   }
 
   Stream fetchFirstUser() async* {
-    // final firestore = FirebaseFirestore.instance;
-    // final firestore = context.watch<CalendarStore>().firestore;
     var results = await firestore.collection('schedule').get(); //get 앞에 where 넣어서 조건검색 가능
     List lst = [];
     for (var doc in results.docs){
@@ -190,21 +198,5 @@ class CalendarStore extends ChangeNotifier {
     {'title': 'Ruby', 'content': 'Ruby is a dynamic and object-oriented programming language'}
   ];
 
-}
 
-// class ScadulesStore extends ChangeNotifier {
-//   final firestore = FirebaseFirestore.instance;
-//
-//   getData() async {
-//     var result = await firestore.collection('schedule').get(); //get 앞에 where 넣어서 조건검색 가능
-//     for (var doc in result.docs) {
-//       print(doc.data());
-//     };
-//   }
-//
-//   addData(startTime, endTime, content) async {
-//     // var result = await firestore.collection('schedule').doc('gm40kp7ABsImFH8vU455').update({'endtime': 1400, 'starttime': 1200,});
-//     var result = await firestore.collection('schedule').add({'endtime': endTime, 'starttime': startTime, 'content' : content});
-//     return result;
-//   }
-// }
+}

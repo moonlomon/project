@@ -12,36 +12,30 @@ import 'package:project/widgets/components/mainTemplates/infoMemo.dart';
 
 
 class HomeWigdet extends StatefulWidget {
-  const HomeWigdet({Key? key, this.userRegister, this.resetRegister}) : super(key: key);
+  HomeWigdet({Key? key, this.userRegister, this.resetRegister}) : super(key: key);
 
   final userRegister;
   final resetRegister;
-
 
   @override
   State<HomeWigdet> createState() => _HomeWigdetState();
 }
 
 class _HomeWigdetState extends State<HomeWigdet> {
-  List<dynamic> widgetSelector = [InfoMemoMain(), RecordWidget(), CalendarWidget(), OurApp()];
+
   var tap = 0;
 
   @override
   Widget build(BuildContext context) {
 
-    return Scaffold(
-        appBar: AppBar(
-          leading: IconButton(
-              icon: Icon(Icons.arrow_back_ios_new),
-              onPressed: (){
-                widget.resetRegister();
-              }
-          ),
-          title: Text(widget.userRegister, style: TextStyle(fontWeight: FontWeight.w600)),
-          centerTitle: true,
-          backgroundColor: Colors.black,
-        ),
+  List<dynamic> widgetSelector = [
+    InfoMemoMain(userRegister:widget.userRegister, resetRegister:widget.resetRegister),
+    RecordWidget(userRegister:widget.userRegister, resetRegister:widget.resetRegister),
+    CalendarWidget(userRegister:widget.userRegister, resetRegister:widget.resetRegister),
+    OurApp(userRegister:widget.userRegister, resetRegister:widget.resetRegister)
+  ];
 
+    return Scaffold(
         body: Center(child: widgetSelector[tap]),
         bottomNavigationBar: BottomNavigationBar(
           showSelectedLabels: false,

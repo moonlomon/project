@@ -23,12 +23,10 @@ class _TodoWidgetState extends State<TodoWidget> {
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              Expanded(
-                flex: 1,
+              Container(
                 child: Text("TodoList", style: TextStyle(fontSize: 28)),
               ),
-              Expanded(
-                flex: 3,
+              Container(
                 child: Text("투두리스트"),
               )
             ],
