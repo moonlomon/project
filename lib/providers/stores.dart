@@ -1,9 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:http/http.dart' as http;
 
 
 
 class CalendarStore extends ChangeNotifier {
+
+  getDate() async {
+    var result = await http.get(Uri.parse('http://myteach.shop/'));
+    return result;
+  }
 
   late DateTime _selectedDate = DateTime.now();
 

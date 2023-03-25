@@ -60,8 +60,6 @@ class _MyAppState extends State<MyApp> {
       setState(() {
         userRegister = user;
       });
-      setState(() {
-      });
     } else {
       showDialog(context: context, builder: (context){
         return AlertDialog(

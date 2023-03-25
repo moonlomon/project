@@ -1,12 +1,16 @@
 import 'package:flutter/material.dart';
+import 'package:http/http.dart' as http;
+import 'package:provider/provider.dart';
+import 'dart:convert';
 
-import '../../../database/cloudfirebase.dart';
+import '../../../Providers/stores.dart';
 
 class OurApp extends StatelessWidget {
   const OurApp({Key? key, this.resetRegister, this.userRegister, }) : super(key: key);
 
   final userRegister;
   final resetRegister;
+
 
   @override
   Widget build(BuildContext context) {
@@ -18,15 +22,14 @@ class OurApp extends StatelessWidget {
               resetRegister();
             }
         ),
-        title: Text("${userRegister}",
+        title: Text("hihihihihi",
             style: TextStyle(fontWeight: FontWeight.w600,
                 color:Colors.white)),
         centerTitle: true,
         backgroundColor: Color.fromRGBO(30, 30, 30, 1.0),
       ),
-      body: Center(
-        child: Text("hi"),
-      ),
+      body: Center(child: TextButton(child: Text("불러오기"), onPressed: ()=> context.read<CalendarStore>().getDate(),),)
+
     );
   }
 }

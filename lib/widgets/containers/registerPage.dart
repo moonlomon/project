@@ -21,7 +21,21 @@ class RegisterWidget extends StatelessWidget {
         children: [
           Text("소환사등록", style: TextStyle(fontSize: 30, fontWeight: FontWeight.w700)),
           Container(
-            padding: EdgeInsets.all(20),
+            padding: EdgeInsets.only(top:20, left: 20, right: 20),
+            child: TextField(
+              onChanged: (text) {},
+              decoration: InputDecoration(hintText: "아이디",hintStyle: TextStyle(fontWeight: FontWeight.w600)),
+            ),
+          ),
+          Container(
+            padding: EdgeInsets.only(left: 20, right: 20),
+            child: TextField(
+              onChanged: (text) {},
+              decoration: InputDecoration(hintText: "패스워드",hintStyle: TextStyle(fontWeight: FontWeight.w600)),
+            ),
+          ),
+          Container(
+            padding: EdgeInsets.only(bottom:20,left: 20, right: 20),
             child: TextField(
               onChanged: (text) {
                 setUser(text);

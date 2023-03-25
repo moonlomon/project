@@ -92,7 +92,7 @@ class _MainCalendarScreenState extends State<MainCalendarScreen> {
       DateTime.now().month,
       DateTime.now().day,
     );
-    updateFilteredLst();
+
   }
 
 
