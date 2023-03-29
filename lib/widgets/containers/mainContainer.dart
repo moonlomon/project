@@ -11,17 +11,17 @@ import 'package:project/widgets/components/mainTemplates/infoMemo.dart';
 
 
 
-class HomeWigdet extends StatefulWidget {
-  HomeWigdet({Key? key, this.userRegister, this.resetRegister}) : super(key: key);
+class HomeWidget extends StatefulWidget {
+  HomeWidget({Key? key, this.userRegister, this.resetRegister}) : super(key: key);
 
   final userRegister;
   final resetRegister;
 
   @override
-  State<HomeWigdet> createState() => _HomeWigdetState();
+  State<HomeWidget> createState() => _HomeWidgetState();
 }
 
-class _HomeWigdetState extends State<HomeWigdet> {
+class _HomeWidgetState extends State<HomeWidget> {
 
   var tap = 0;
 
@@ -29,7 +29,7 @@ class _HomeWigdetState extends State<HomeWigdet> {
   Widget build(BuildContext context) {
 
   List<dynamic> widgetSelector = [
-    InfoMemoMain(userRegister:widget.userRegister, resetRegister:widget.resetRegister),
+    InfoMemoMain(),
     RecordWidget(userRegister:widget.userRegister, resetRegister:widget.resetRegister),
     CalendarWidget(userRegister:widget.userRegister, resetRegister:widget.resetRegister),
     OurApp(userRegister:widget.userRegister, resetRegister:widget.resetRegister)

@@ -11,10 +11,7 @@ import '../modules/infoMemo/memo.dart';
 import '../modules/infoMemo/userInfo.dart';
 
 class InfoMemoMain extends StatefulWidget {
-  const InfoMemoMain({Key? key, this.userRegister, this.resetRegister}) : super(key: key);
-
-  final userRegister;
-  final resetRegister;
+  const InfoMemoMain({Key? key}) : super(key: key);
 
   @override
   State<InfoMemoMain> createState() => _InfoMemoMainState();
@@ -43,6 +40,7 @@ class _InfoMemoMainState extends State<InfoMemoMain> {
   @override
   Widget build(BuildContext context) {
     var memoList = context.watch<CalendarStore>().memos;
+    CalendarStore store = Provider.of<CalendarStore>(context, listen: false);
 
     return Scaffold(
       floatingActionButton: FloatingActionButton(
@@ -102,12 +100,15 @@ class _InfoMemoMainState extends State<InfoMemoMain> {
         leading: IconButton(
             icon: Icon(Icons.arrow_back_ios_new, color: Colors.white),
             onPressed: (){
-              widget.resetRegister();
+              Get.back();
             }
         ),
-        title: Text("${widget.userRegister}",
-            style: TextStyle(fontWeight: FontWeight.w600,
-                color:titleColor)),
+        title: Text(
+            store.selectUser.nickname??"소환사이름 없음",
+            style: TextStyle(
+                fontWeight: FontWeight.w600,
+                color:titleColor
+            )),
         centerTitle: true,
         backgroundColor: Color.fromRGBO(30, 30, 30, 1.0),
         elevation: 0,
@@ -116,7 +117,7 @@ class _InfoMemoMainState extends State<InfoMemoMain> {
         controller: scroll,
         slivers: [
           SliverToBoxAdapter(
-            child: userInfoWidget(userRegister:widget.userRegister),
+            child: userInfoWidget(),
           ),
           SliverToBoxAdapter(
             child: TodoWidget(),
@@ -134,13 +135,6 @@ class _InfoMemoMainState extends State<InfoMemoMain> {
                       ),
                     ),
                     onTap: () {
-                      // Navigator.push(context, MaterialPageRoute(builder: (_) {
-                      //   return MemoWidgetPage(
-                      //       memoList: memoList,
-                      //       title: memoList[i]['title'],
-                      //       content: memoList[i]['content'],
-                      //       colorNum: i);
-                      // }));
                       Get.to(MemoWidgetPage(
                                 memoList: memoList,
                                 title: memoList[i]['title'],

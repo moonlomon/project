@@ -1,56 +1,98 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:project/widgets/containers//mainContainer.dart';
+import 'package:get/get.dart';
+import 'package:project/widgets/containers/signup.dart';
+import 'package:provider/provider.dart';
 
-class RegisterWidget extends StatelessWidget {
+import '../../Providers/stores.dart';
+
+class RegisterWidget extends StatefulWidget {
   const RegisterWidget({Key? key, this.setUser, this.setRegister}) : super(key: key);
 
   final setUser;
   final setRegister;
 
+
+  @override
+  State<RegisterWidget> createState() => _RegisterWidgetState();
+}
+
+class _RegisterWidgetState extends State<RegisterWidget> {
+
+  late String id;
+  late String password;
+
+
   @override
   Widget build(BuildContext context) {
 
     return Scaffold(
-      floatingActionButton: FloatingActionButton(
-        child: Icon(Icons.message),
-        backgroundColor: Colors.deepOrange,
-        onPressed: () {},
-      ),
       body: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          Text("소환사등록", style: TextStyle(fontSize: 30, fontWeight: FontWeight.w700)),
+          Text("로그인", style: TextStyle(fontSize: 30, fontWeight: FontWeight.w700)),
           Container(
             padding: EdgeInsets.only(top:20, left: 20, right: 20),
             child: TextField(
-              onChanged: (text) {},
+              onChanged: (value) {
+                setState(() {
+                  id = value;
+                });
+              },
               decoration: InputDecoration(hintText: "아이디",hintStyle: TextStyle(fontWeight: FontWeight.w600)),
             ),
           ),
           Container(
-            padding: EdgeInsets.only(left: 20, right: 20),
+            padding: EdgeInsets.only(bottom:20, left: 20, right: 20),
             child: TextField(
-              onChanged: (text) {},
+              onChanged: (value) {
+                setState(() {
+                  password = value;
+                });
+              },
               decoration: InputDecoration(hintText: "패스워드",hintStyle: TextStyle(fontWeight: FontWeight.w600)),
             ),
           ),
-          Container(
-            padding: EdgeInsets.only(bottom:20,left: 20, right: 20),
-            child: TextField(
-              onChanged: (text) {
-                setUser(text);
-              },
-              decoration: InputDecoration(hintText: "소환사이름",hintStyle: TextStyle(fontWeight: FontWeight.w600)),
-            ),
-          ),
-          ElevatedButton(
-            style: ElevatedButton.styleFrom(
-              backgroundColor: Colors.black45,
-            ),
-            child: Text("등록",style: TextStyle(fontWeight: FontWeight.w500)),
-            onPressed: () {
-              setRegister();
-            },
+          Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Container(
+                margin: EdgeInsets.only(right: 10, left: 10),
+                child: ElevatedButton(
+                  style: ElevatedButton.styleFrom(
+                    backgroundColor: Colors.deepOrange,
+                  ),
+                  child: Text("로그인",style: TextStyle(fontWeight: FontWeight.w500)),
+                  onPressed: () {
+                    var users = Provider.of<CalendarStore>(context, listen: false).users;
+                    // find user by id and password
+                    bool exists = users.any((user) => user.id == id && user.password == password);
+
+                    if (exists) {
+                      var user = users.firstWhere((user) => user.id == id && user.password == password);
+                      Provider.of<CalendarStore>(context, listen: false).selectUser = user;
+                      Get.to(HomeWidget());
+                    } else {
+                      // user not found, show error message
+                      print("로그인 실패");
+                    }
+                  },
+                ),
+              ),
+              Container(
+                margin: EdgeInsets.only(right: 10, left: 10),
+                child: ElevatedButton(
+                  style: ElevatedButton.styleFrom(
+                    backgroundColor: Colors.black,
+                  ),
+                  child: Text("회원가입",style: TextStyle(fontWeight: FontWeight.w500)),
+                  onPressed: () {
+                    Get.to(SignUp());
+                  },
+                ),
+              )
+            ],
           )
         ],
       ),

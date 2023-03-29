@@ -14,9 +14,8 @@ import '../../../../../Providers/stores.dart';
 
 
 class ScheduleBottomSheet extends StatefulWidget {
-  const ScheduleBottomSheet({Key? key, required this.lst, required this.selectedDate}) : super(key: key);
+  const ScheduleBottomSheet({Key? key, required this.selectedDate}) : super(key: key);
 
-  final lst;
   final DateTime selectedDate;
 
   @override
@@ -27,9 +26,9 @@ class _ScheduleBottomSheetState extends State<ScheduleBottomSheet> {
 
   final GlobalKey<FormState> formKey = GlobalKey();
 
-  int? startTime;
-  int? endTime;
-  String? content;
+  late int startTime;
+  late int endTime;
+  late String content;
 
   @override
   Widget build(BuildContext context) {
@@ -121,21 +120,27 @@ class _ScheduleBottomSheetState extends State<ScheduleBottomSheet> {
   }
 
   void onSavePressed() {
+    var lst = Provider.of<CalendarStore>(context, listen: false).lst;
+
     if (formKey.currentState!.validate()) {
       formKey.currentState!.save();
 
-      setState(() {
-        widget.lst.add({
-          'key': 1,
-          'date': widget.selectedDate,
-          'startTime': startTime,
-          'endTime': endTime,
-          'content': content,
-        });
-      });
+      lst.add(
+        CardModel(
+          key: lst.length + 1,
+          date: widget.selectedDate,
+          startTime: startTime,
+          endTime: endTime,
+          content: content,
+        )
+      );
+
+      // Provider.of<CalendarStore>(context).lst.add(
+      //   CardModel(key: 1, date: widget.selectedDate, startTime: startTime, endTime: endTime, content: content,)
+      // );
 
       print("${widget.selectedDate} 데이터 저장완료");
-      print("${widget.lst}");
+      print("$lst");
 
       // Navigator.of(context).pop();
       Get.back();
@@ -164,7 +169,7 @@ class _ScheduleBottomSheetState extends State<ScheduleBottomSheet> {
   }
 
   String? contentValidator(String? val) {
-    if (val == null || val.length == 0) {
+    if (val == null || val.isEmpty) {
       return "값을 입력해주세요";
     }
     return null;

@@ -22,13 +22,9 @@ class CalendarWidget extends StatefulWidget {
   State<CalendarWidget> createState() => _CalendarWidgetState();
 }
 
+
 class _CalendarWidgetState extends State<CalendarWidget> {
 
-  List<Map<String,dynamic>> lst = [
-    {'key':1, 'date':DateTime.utc(2023, 03, 22), 'startTime':12, 'endTime':14, 'content':'코딩'},
-    {'key':1, 'date':DateTime.utc(2023, 03, 23), 'startTime':1, 'endTime':3, 'content':'과제'},
-    {'key':1, 'date':DateTime.utc(2023, 03, 24), 'startTime':1, 'endTime':3, 'content':'팀플'},
-  ];
 
   @override
   Widget build(BuildContext context) {
@@ -42,7 +38,7 @@ class _CalendarWidgetState extends State<CalendarWidget> {
           showModalBottomSheet(
             context: context,
             isDismissible: true,
-            builder: (_) => ScheduleBottomSheet(lst:lst,selectedDate:selectedDate),
+            builder: (_) => ScheduleBottomSheet(selectedDate:selectedDate),
             isScrollControlled: true
           );
         },
@@ -61,17 +57,16 @@ class _CalendarWidgetState extends State<CalendarWidget> {
         centerTitle: true,
         backgroundColor: Color.fromRGBO(30, 30, 30, 1.0),
       ),
-      body: MainCalendarScreen(lst:lst),
+      body: MainCalendarScreen(),
     );
   }
 }
 
 class MainCalendarScreen extends StatefulWidget {
-  const MainCalendarScreen({Key? key, this.userRegister, this.resetRegister, this.lst}) : super(key: key);
+  const MainCalendarScreen({Key? key, this.userRegister, this.resetRegister}) : super(key: key);
 
   final userRegister;
   final resetRegister;
-  final lst;
 
   @override
   State<MainCalendarScreen> createState() => _MainCalendarScreenState();
@@ -81,7 +76,7 @@ class _MainCalendarScreenState extends State<MainCalendarScreen> {
 
 
   late DateTime selectedDate;
-  List<Map<String, dynamic>> filteredLst = [];
+  List<CardModel> filteredLst = [];
 
 
   @override
@@ -95,11 +90,10 @@ class _MainCalendarScreenState extends State<MainCalendarScreen> {
 
   }
 
-
   void updateFilteredLst() {
     setState(() {
       filteredLst =
-          widget.lst.where((item) => item['date'] == selectedDate).toList();
+          Provider.of<CalendarStore>(context, listen: false).lst.where((item) => item.date == selectedDate).toList();
     });
   }
 
@@ -113,7 +107,6 @@ class _MainCalendarScreenState extends State<MainCalendarScreen> {
 
   @override
   Widget build(BuildContext context) {
-
 
     return SafeArea(
         child: Column(
@@ -131,9 +124,9 @@ class _MainCalendarScreenState extends State<MainCalendarScreen> {
                                 bottom: 8.0, left: 8.0, right: 8.0
                             ),
                             child: ScheduleCard(
-                              startTime: filteredLst[i]['startTime'],
-                              endTime: filteredLst[i]['endTime'],
-                              content: filteredLst[i]['content'],
+                              startTime: filteredLst[i].startTime,
+                              endTime: filteredLst[i].endTime,
+                              content: filteredLst[i].content,
                             ),
                           );
                         },

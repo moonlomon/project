@@ -64,7 +64,7 @@ class _RecordWidgetState extends State<RecordWidget> {
             itemBuilder: (c, i) {
 
               var data = context.watch<CalendarStore>().records[i];
-              var lst = ['A', 'B', 'C', 'D', 'E','F','G','H','I','J','K','L','M','N','O','P','Q'];
+              var initial = ['A', 'B', 'C', 'D', 'E','F','G','H','I','J','K','L','M','N','O','P','Q'];
 
               return Container(
                 padding: EdgeInsets.all(10.0),
@@ -86,7 +86,7 @@ class _RecordWidgetState extends State<RecordWidget> {
                             child: Column(
                               children: [
                                 CircleAvatar(
-                                  backgroundImage: lst.contains(data['champion'][0]) ? NetworkImage('https://seongjun2moon.github.io/chanpionsA-Q/${data['champion']}.png')
+                                  backgroundImage: initial.contains(data['champion'][0]) ? NetworkImage('https://seongjun2moon.github.io/chanpionsA-Q/${data['champion']}.png')
                                       : NetworkImage('https://seongjun2moon.github.io/chanpionsR-Z/${data['champion']}.png'),
                                   // backgroundColor: Colors.grey,
                                   radius: 25,

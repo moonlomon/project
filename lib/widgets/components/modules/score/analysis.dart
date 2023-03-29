@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:provider/provider.dart';
+
+import '../../../../Providers/stores.dart';
 
 class analysis extends StatelessWidget {
   const analysis({Key? key}) : super(key: key);
@@ -23,7 +26,7 @@ class analysis extends StatelessWidget {
             children: [
               Padding(
                 padding: EdgeInsets.only(top: 20, left: 20, right: 20),
-                child: Image.network('https://seongjun2moon.github.io/tier/test.gif'),
+                child: Image.network(Provider.of<CalendarStore>(context, listen: false).anlysis),
               ),
               Container(
                 constraints: BoxConstraints(maxWidth: 600),
@@ -32,13 +35,11 @@ class analysis extends StatelessWidget {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Text('우리팀 원딜 바텀에 혼자 있었음, 상대팀 미드와 상대팀 정글이 바텀에서 원딜 죽임\n'
-                        '우리팀 탑이 탑에 있음, 상대팀 탑이 탑에 있음\n'
-                        '상대 원딜이 미드에 있음, 상대 서폿은 보이지 않음 그치만 원딜 근처에 있을 확률 높음\n'
-                        '그럼에도 원딜을 죽일려다 2대2 교전에서 사망'),
+                    Text(Provider.of<CalendarStore>(context, listen: false).explain),
                   ],
                 ),
-              )
+              ),
+              SizedBox(child: IconButton(onPressed:(){} ,icon: Icon(Icons.play_arrow)),)
             ],
           );
         },

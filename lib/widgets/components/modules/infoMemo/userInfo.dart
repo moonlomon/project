@@ -4,12 +4,14 @@ import 'package:provider/provider.dart';
 import '../../../../Providers/stores.dart';
 
 class userInfoWidget extends StatelessWidget {
-  const userInfoWidget({Key? key, this.userRegister}) : super(key: key);
+  const userInfoWidget({Key? key}) : super(key: key);
 
-  final userRegister;
 
   @override
   Widget build(BuildContext context) {
+
+    CalendarStore store = Provider.of<CalendarStore>(context, listen: false);
+
     return Container(
       color: Color.fromRGBO(30, 30, 30, 1.0),
       height: 200,
@@ -24,10 +26,10 @@ class userInfoWidget extends StatelessWidget {
                   padding: EdgeInsets.all(20),
                   child: Column(
                     children: [
-                      Text("${userRegister}",
+                      Text(store.selectUser.nickname??"소환사이름 없음",
                           style: TextStyle(
                               fontSize: 24, fontWeight: FontWeight.w600 ,color: Colors.white)),
-                      Text("레벨",
+                      Text(store.selectUser.level??"레벨정보 없음",
                           style: TextStyle(
                               color: Colors.white))
                     ],
@@ -59,8 +61,7 @@ class userInfoWidget extends StatelessWidget {
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
                           CircleAvatar(
-                              backgroundImage: NetworkImage(
-                                  'https://seongjun2moon.github.io/tier/gold.png'),
+                              backgroundImage: NetworkImage(store.selectUser.tier?? "티어정보 없음"),
                               backgroundColor: Color.fromRGBO(30, 30, 30, 1.0),
                           ),
                           Text("티어",
@@ -85,7 +86,7 @@ class userInfoWidget extends StatelessWidget {
                       child: Column(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
-                          Text("43%",
+                          Text(store.selectUser.win_rate??"X",
                               style: TextStyle(
                                   fontSize: 25, color: Colors.white54)),
                           Text("승률", style: TextStyle(color: Colors.white)),
@@ -98,8 +99,7 @@ class userInfoWidget extends StatelessWidget {
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
                           CircleAvatar(
-                              backgroundImage: NetworkImage(
-                                  'https://seongjun2moon.github.io/chanpionsA-Q/Ahri.png')),
+                              backgroundImage: NetworkImage(store.selectUser.most??"챔피언 정보 없음")),
                           Text("모스트챔피언",
                               style: TextStyle(color: Colors.white)),
                         ],

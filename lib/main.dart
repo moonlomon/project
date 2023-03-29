@@ -46,7 +46,7 @@ class MyApp extends StatefulWidget {
 
 class _MyAppState extends State<MyApp> {
 
-  var user = "" ;
+  var user = "";
   var userRegister = "";
 
   setUser(a){
@@ -75,8 +75,8 @@ class _MyAppState extends State<MyApp> {
                     Get.back();
                     return;
                   },
-                  child: Text("확인"),
                   style: ElevatedButton.styleFrom(backgroundColor: Colors.black87),
+                  child: Text("확인"),
                 ),
               ],
             )
@@ -92,9 +92,15 @@ class _MyAppState extends State<MyApp> {
     });
   }
 
+  final _formKey = GlobalKey<FormState>();
+
   @override
   Widget build(BuildContext context) {
-    return userRegister == "" ? RegisterWidget(setUser:setUser, setRegister:setRegister)
-        : HomeWigdet(userRegister:userRegister, resetRegister:resetRegister);
+        return Form(
+          key: _formKey,
+          // child: userRegister == "" ? RegisterWidget(setUser:setUser, setRegister:setRegister)
+          //     : HomeWigdet(userRegister:userRegister, resetRegister:resetRegister),
+          child: RegisterWidget( setUser:setUser, setRegister:setRegister),
+        );
+      }
   }
-}
