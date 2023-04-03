@@ -13,14 +13,11 @@ class TodoWidget extends StatefulWidget {
 
 class _TodoWidgetState extends State<TodoWidget> {
 
-  List<Map<String,dynamic>> lst = [
-    {'key':1, 'date':DateTime.utc(2023, 03, 22), 'startTime':12, 'endTime':14, 'content':'코딩'},
-    {'key':1, 'date':DateTime.utc(2023, 03, 23), 'startTime':1, 'endTime':3, 'content':'과제'},
-    {'key':1, 'date':DateTime.utc(2023, 03, 24), 'startTime':1, 'endTime':3, 'content':'팀플'},
-  ];
-
   @override
   Widget build(BuildContext context) {
+
+    List<CardModel> lst = Provider.of<CalendarStore>(context, listen: false).lst;
+
     return Card(
       child: Container(
         child: Container(
@@ -66,12 +63,13 @@ class _HowTilesState extends State<HowTiles> {
     var answer;
 
     if (widget.lst.length == 1) {
-      answer =  TodoTile(content: widget.lst[0]['content']);
+      answer =  TodoTile(content: widget.lst[0].content);
     } else if(widget.lst.length == 2) {
-      answer =  Column(children: [TodoTile(content: widget.lst[0]['content']),TodoTile(content: widget.lst[1]['content'])],);
+      answer =  Column(children: [TodoTile(content: widget.lst[0].content),TodoTile(content: widget.lst[1].content)],);
     }
     else if(widget.lst.length >= 3){
-      answer =  Column(children: [TodoTile(content: widget.lst[0]['content']),TodoTile(content: widget.lst[1]['content']), IconButton(onPressed:(){},icon: FaIcon(FontAwesomeIcons.ellipsis))],);
+      answer =  Column(children: [TodoTile(content: widget.lst[0].content),TodoTile(content: widget.lst[1].content),
+        IconButton(onPressed:(){},icon: FaIcon(FontAwesomeIcons.ellipsis), color: Colors.black,)],);
     }
 
     return answer;

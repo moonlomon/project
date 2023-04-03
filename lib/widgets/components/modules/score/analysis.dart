@@ -9,6 +9,10 @@ class analysis extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+
+    CalendarStore calendarStore = Provider.of<CalendarStore>(context, listen: false);
+    List<Map<String, String>> plays = Provider.of<CalendarStore>(context, listen: false).analysis;
+
     return Scaffold(
       appBar: AppBar(
         leading: IconButton(
@@ -18,15 +22,19 @@ class analysis extends StatelessWidget {
               Get.back();
             }
         ),
+        title: Text("AI분석"),
+        centerTitle: true,
+        backgroundColor: Color.fromRGBO(30, 30, 30, 1.0),
+        elevation: 0,
       ),
       body: ListView.builder(
-        itemCount: 3,
+        itemCount: 4,
         itemBuilder: (c, i) {
           return Column(
             children: [
               Padding(
                 padding: EdgeInsets.only(top: 20, left: 20, right: 20),
-                child: Image.network(Provider.of<CalendarStore>(context, listen: false).anlysis),
+                child: Image.network(plays[i]['anlysisUrl']??calendarStore.anlysis),
               ),
               Container(
                 constraints: BoxConstraints(maxWidth: 600),
@@ -35,11 +43,11 @@ class analysis extends StatelessWidget {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Text(Provider.of<CalendarStore>(context, listen: false).explain),
+                    Text(plays[i]['explain']??calendarStore.explain),
                   ],
                 ),
               ),
-              SizedBox(child: IconButton(onPressed:(){} ,icon: Icon(Icons.play_arrow)),)
+              SizedBox(child: IconButton(onPressed:(){} ,icon: Icon(Icons.play_arrow), color: Colors.black),)
             ],
           );
         },

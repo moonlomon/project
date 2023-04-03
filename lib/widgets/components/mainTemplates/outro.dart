@@ -5,6 +5,22 @@ import 'dart:convert';
 
 import '../../../Providers/stores.dart';
 
+getdata(user) async {
+  final response = await http.post(
+      Uri.parse('http://myteach.shop/user/signup'),
+      headers: <String, String>{
+        'Content-Type': 'application/json; charset=UTF-8',
+      },
+      body: jsonEncode(user));
+
+  if (response.statusCode == 200) {
+    return jsonDecode(response.body);
+  } else {
+    throw Exception('안됨ㅅㄱ');
+  }
+}
+
+
 class OurApp extends StatelessWidget {
   const OurApp({Key? key, this.resetRegister, this.userRegister, }) : super(key: key);
 
@@ -28,8 +44,22 @@ class OurApp extends StatelessWidget {
         centerTitle: true,
         backgroundColor: Color.fromRGBO(30, 30, 30, 1.0),
       ),
-      body: Center(child: TextButton(child: Text("불러오기"), onPressed: ()=> context.read<CalendarStore>().getDate(),),)
-
+      body: Center(child: TextButton(child: Text("불러오기"), onPressed: () async {
+        try {
+          final response = await getdata({"id":"9876", "password" : "1234"},);
+          print(response);
+          // 성공적인 처리를 위한 코드
+        } catch (e) {
+          // 예외 처리를 위한 코드
+          print("");
+          print("");
+          print("에러메세지 : $e");
+          print("");
+          print("");
+        }
+      },
+)
+    ),
     );
   }
 }

@@ -2,6 +2,8 @@
 import 'package:flutter/material.dart';
 import 'package:project/models/memoModels.dart';
 import 'package:project/widgets/components/modules/infoMemo/todoList.dart';
+import 'package:project/widgets/components/modules/settings/addUser.dart';
+import 'package:project/widgets/components/mainTemplates/setting.dart';
 import 'package:provider/provider.dart';
 import 'package:get/get.dart';
 
@@ -100,7 +102,35 @@ class _InfoMemoMainState extends State<InfoMemoMain> {
         leading: IconButton(
             icon: Icon(Icons.arrow_back_ios_new, color: Colors.white),
             onPressed: (){
-              Get.back();
+              showDialog(
+                  context: context,
+                  builder: (_) {
+                    return AlertDialog(
+                      title: const Text("로그아웃"),
+                      content: Text("로그아웃 하시겠습니까?"),
+                      actions: [
+                        Center(
+                            child: Row(
+                              children: [
+                                ElevatedButton(
+                                  onPressed: () {
+                                    Get.back();
+                                    Get.back();
+                                  },
+                                  child: Text("로그아웃"),
+                                ),
+                                ElevatedButton(
+                                  onPressed: () {
+                                    Get.back();
+                                  },
+                                  child: Text("취소"),
+                                ),
+                              ],
+                            )
+                        ),
+                      ],
+                    );
+                  });
             }
         ),
         title: Text(
@@ -112,6 +142,59 @@ class _InfoMemoMainState extends State<InfoMemoMain> {
         centerTitle: true,
         backgroundColor: Color.fromRGBO(30, 30, 30, 1.0),
         elevation: 0,
+      ),
+      endDrawer: Drawer(
+        child: ListView(
+          padding: EdgeInsets.zero,
+          children: <Widget>[
+            UserAccountsDrawerHeader(
+              currentAccountPicture: CircleAvatar(
+                backgroundImage: NetworkImage(store.selectUser.most?? "https://opgg-static.akamaized.net/images/medals/default.png"),
+              ),
+              accountName: Text(store.selectUser.nickname??"소환사이름 없음",
+                  style: TextStyle(
+                      fontSize: 20, fontWeight: FontWeight.w600 ,color: Colors.white)),
+              accountEmail: Text(store.selectUser.level??"레벨정보 없음",
+                  style: TextStyle(
+                      fontSize: 15, fontWeight: FontWeight.w600 ,color: Colors.white)),
+              decoration: BoxDecoration(
+                color: Provider.of<CalendarStore>(context, listen: false).FRIMARY_COLOR,
+                borderRadius: BorderRadius.only(
+                  bottomLeft: Radius.circular(20.0),
+                  bottomRight: Radius.circular(20.0),
+                ),
+              ),
+              otherAccountsPictures: [
+                IconButton(
+                  icon: Icon(Icons.refresh),
+                  onPressed: (){
+                    setState(() {});
+                  },
+                )
+              ],
+            ),
+            ListTile(
+              leading: Icon(
+                Icons.home,
+                color: Colors.grey[850],
+              ),
+              title: Text('Home', style: TextStyle(color: Colors.grey[850])),
+              onTap: () {
+                Get.back();
+              },
+            ),
+            ListTile(
+              leading: Icon(
+                Icons.settings,
+                color: Colors.grey[850],
+              ),
+              title: Text('settings', style: TextStyle(color: Colors.grey[850])),
+              onTap: () {
+                Get.to(SettingsWidget());
+              },
+            ),
+          ],
+        ),
       ),
       body: CustomScrollView(
         controller: scroll,

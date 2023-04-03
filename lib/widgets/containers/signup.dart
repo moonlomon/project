@@ -1,8 +1,15 @@
+import 'dart:convert';
+
+import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:provider/provider.dart';
 
 import '../../Providers/stores.dart';
+import 'package:http/http.dart' as http;
+
+import '../../providers/stores.dart' as stores1;
+
 
 
 class SignUp extends StatefulWidget {
@@ -98,24 +105,6 @@ class _SignUpState extends State<SignUp> {
                     decoration: InputDecoration(hintText: "비밀번호 확인",hintStyle: TextStyle(fontWeight: FontWeight.w600)),
                   ),
                 ),
-                // Container(
-                //   padding: EdgeInsets.only(bottom:20,left: 20, right: 20),
-                //   child: TextFormField(
-                //     onChanged: (value) {
-                //       setState(() {
-                //         nickname = value;
-                //       });
-                //     },
-                //     // validator: (value){
-                //     //   if (nickname == null) {
-                //     //     return ;
-                //     //   } else if (nickname !in Provider.of<CalendarStore>(context, listen: false).users) {
-                //     //
-                //     //   }
-                //     // },
-                //     decoration: InputDecoration(hintText: "소환사이름",hintStyle: TextStyle(fontWeight: FontWeight.w600)),
-                //   ),
-                // ),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
@@ -126,7 +115,7 @@ class _SignUpState extends State<SignUp> {
                           backgroundColor: Colors.black,
                         ),
                         child: Text("가입완료",style: TextStyle(fontWeight: FontWeight.w500)),
-                        onPressed: () {
+                        onPressed: () async {
                           if (_formKey.currentState!.validate()) { // _formKey 사용
                             _formKey.currentState!.save();
                             id = inputId!;
@@ -137,10 +126,34 @@ class _SignUpState extends State<SignUp> {
                             inputPassWord = null;
                             rePassWord = null;
                           }
-                          setState(() {
-                            userInfo newUser = userInfo(id: inputId, password: inputPassWord);
-                            bool exists = users.any((user) => user.id == newUser.id);
-                            if (exists) {
+                          userInfo newUser = userInfo(id: inputId, password: inputPassWord);
+                          String jsonString = jsonEncode(newUser);
+                          Map<String,dynamic> jsonData = jsonDecode(jsonString);
+                          try {
+                            final response = await Provider.of<stores1.SignUpStore>(context, listen: false).getdata(jsonData);
+                            if (response['msg'] == 'Success') {
+                              showDialog(context: context, builder: (context){
+                                return AlertDialog(
+                                  title: Text("가입완료", style: TextStyle(fontWeight: FontWeight.w700)),
+                                  content: Text("환영합니다"),
+                                  actions: [
+                                    Row(
+                                      mainAxisAlignment: MainAxisAlignment.center,
+                                      children: [
+                                        ElevatedButton(
+                                          onPressed: () {
+                                            Get.back();
+                                            Get.back();
+                                          },
+                                          style: ElevatedButton.styleFrom(backgroundColor: Colors.black87),
+                                          child: Text("확인"),
+                                        ),
+                                      ],
+                                    )
+                                  ],
+                                );
+                              });
+                            } else {
                               showDialog(context: context, builder: (context){
                                 return AlertDialog(
                                   title: Text("오류", style: TextStyle(fontWeight: FontWeight.w700)),
@@ -151,36 +164,10 @@ class _SignUpState extends State<SignUp> {
                                       children: [
                                         ElevatedButton(
                                           onPressed: () {
-                                            // Navigator.of(context).pop();
-                                            Get.back();
-                                            return;
-                                          },
-                                          child: Text("확인"),
-                                          style: ElevatedButton.styleFrom(backgroundColor: Colors.black87),
-                                        ),
-                                      ],
-                                    )
-                                  ],
-                                );
-                              });
-                            } else {
-                              users.add(newUser);
-                              showDialog(context: context, builder: (context){
-                                return AlertDialog(
-                                  title: Text("가입완료", style: TextStyle(fontWeight: FontWeight.w700)),
-                                  content: Text("환영합니다!"),
-                                  actions: [
-                                    Row(
-                                      mainAxisAlignment: MainAxisAlignment.center,
-                                      children: [
-                                        ElevatedButton(
-                                          onPressed: () {
-                                            // Navigator.of(context).pop();
-                                            Get.back();
                                             Get.back();
                                           },
-                                          child: Text("확인"),
                                           style: ElevatedButton.styleFrom(backgroundColor: Colors.black87),
+                                          child: Text("확인"),
                                         ),
                                       ],
                                     )
@@ -188,9 +175,80 @@ class _SignUpState extends State<SignUp> {
                                 );
                               });
                             }
-                          });
-                          //테스트용
-                          print(users);
+                            // 성공적인 처리를 위한 코드
+                          } catch (e) {
+                            // 예외 처리를 위한 코드
+                            showDialog(context: context, builder: (context){
+                              return AlertDialog(
+                                title: Text("오류", style: TextStyle(fontWeight: FontWeight.w700)),
+                                content: Text("다시 입력해주세요\n오류코드: $e"),
+                                actions: [
+                                  Row(
+                                    mainAxisAlignment: MainAxisAlignment.center,
+                                    children: [
+                                      ElevatedButton(
+                                        onPressed: () {
+                                          Get.back();
+                                        },
+                                        style: ElevatedButton.styleFrom(backgroundColor: Colors.black87),
+                                        child: Text("확인"),
+                                      ),
+                                    ],
+                                  )
+                                ],
+                              );
+                            });
+                          }
+                        //   setState(() {
+                        //     bool exists = users.any((user) => user.id == newUser.id);
+                        //     if (exists) {
+                        //       showDialog(context: context, builder: (context){
+                        //         return AlertDialog(
+                        //           title: Text("오류", style: TextStyle(fontWeight: FontWeight.w700)),
+                        //           content: Text("가입된 아이디입니다."),
+                        //           actions: [
+                        //             Row(
+                        //               mainAxisAlignment: MainAxisAlignment.center,
+                        //               children: [
+                        //                 ElevatedButton(
+                        //                   onPressed: () {
+                        //                     Get.back();
+                        //                   },
+                        //                   style: ElevatedButton.styleFrom(backgroundColor: Colors.black87),
+                        //                   child: Text("확인"),
+                        //                 ),
+                        //               ],
+                        //             )
+                        //           ],
+                        //         );
+                        //       });
+                        //     } else {
+                        //       users.add(newUser);
+                        //       showDialog(context: context, builder: (context){
+                        //         return AlertDialog(
+                        //           title: Text("가입완료", style: TextStyle(fontWeight: FontWeight.w700)),
+                        //           content: Text("환영합니다"),
+                        //           actions: [
+                        //             Row(
+                        //               mainAxisAlignment: MainAxisAlignment.center,
+                        //               children: [
+                        //                 ElevatedButton(
+                        //                   onPressed: () {
+                        //                     Get.back();
+                        //                   },
+                        //                   style: ElevatedButton.styleFrom(backgroundColor: Colors.black87),
+                        //                   child: Text("확인"),
+                        //                 ),
+                        //               ],
+                        //             )
+                        //           ],
+                        //         );
+                        //       });
+                        //     }
+                        //   });
+                        //   // final response = getdata(jsonEncode([{'id': "sjmun0420", 'password': "1234"}]));
+                        // },
+
                         },
                       ),
                     ),

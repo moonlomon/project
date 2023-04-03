@@ -1,6 +1,7 @@
 //외부라이브러리
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
+import 'package:project/providers/stores.dart' as stores1;
 import 'package:provider/provider.dart';
 import 'package:intl/date_symbol_data_local.dart';
 import 'package:get/get.dart';
@@ -26,7 +27,8 @@ void main() async {
   runApp(
       MultiProvider(
         providers: [
-          ChangeNotifierProvider(create: (c) => CalendarStore(),)
+          ChangeNotifierProvider(create: (c) => CalendarStore(),),
+          ChangeNotifierProvider(create: (c) => stores1.SignUpStore(),)
         ],
 
         child: GetMaterialApp(

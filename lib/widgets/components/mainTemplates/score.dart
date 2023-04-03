@@ -23,15 +23,46 @@ class _RecordWidgetState extends State<RecordWidget> {
 
   @override
   Widget build(BuildContext context) {
+
+    var store = Provider.of<CalendarStore>(context, listen: false);
+
     return Scaffold(
       appBar: AppBar(
         leading: IconButton(
             icon: Icon(Icons.arrow_back_ios_new, color: Colors.white),
             onPressed: (){
-              widget.resetRegister();
+              showDialog(
+                  context: context,
+                  builder: (_) {
+                    return AlertDialog(
+                      title: const Text("로그아웃"),
+                      content: Text("로그아웃 하시겠습니까?"),
+                      actions: [
+                        Center(
+                            child: Row(
+                              children: [
+                                ElevatedButton(
+                                  onPressed: () {
+                                    Get.back();
+                                    Get.back();
+                                  },
+                                  child: Text("로그아웃"),
+                                ),
+                                ElevatedButton(
+                                  onPressed: () {
+                                    Get.back();
+                                  },
+                                  child: Text("취소"),
+                                ),
+                              ],
+                            )
+                        ),
+                      ],
+                    );
+                  });
             }
         ),
-        title: Text("${widget.userRegister}",
+        title: Text("${store.selectUser.nickname??"소환사이름 없음"}",
             style: TextStyle(fontWeight: FontWeight.w600,
                 color:Colors.white)),
         centerTitle: true,

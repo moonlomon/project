@@ -3,10 +3,14 @@ import 'package:provider/provider.dart';
 
 import '../../../../Providers/stores.dart';
 
-class userInfoWidget extends StatelessWidget {
+class userInfoWidget extends StatefulWidget {
   const userInfoWidget({Key? key}) : super(key: key);
 
+  @override
+  State<userInfoWidget> createState() => _userInfoWidgetState();
+}
 
+class _userInfoWidgetState extends State<userInfoWidget> {
   @override
   Widget build(BuildContext context) {
 
@@ -43,7 +47,7 @@ class userInfoWidget extends StatelessWidget {
                     backgroundColor: context.watch<CalendarStore>().FRIMARY_COLOR,
                     child: IconButton(
                       icon: Icon(Icons.refresh, color: Colors.white),
-                      onPressed: () {},
+                      onPressed: () {setState(() {});},
                     ),
                   ),
                 )
@@ -61,7 +65,8 @@ class userInfoWidget extends StatelessWidget {
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
                           CircleAvatar(
-                              backgroundImage: NetworkImage(store.selectUser.tier?? "티어정보 없음"),
+                              backgroundImage:
+                              NetworkImage(store.selectUser.tier?? "https://opgg-static.akamaized.net/images/medals/default.png"),
                               backgroundColor: Color.fromRGBO(30, 30, 30, 1.0),
                           ),
                           Text("티어",
@@ -99,7 +104,7 @@ class userInfoWidget extends StatelessWidget {
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
                           CircleAvatar(
-                              backgroundImage: NetworkImage(store.selectUser.most??"챔피언 정보 없음")),
+                              backgroundImage: NetworkImage(store.selectUser.most??"https://opgg-static.akamaized.net/images/medals/default.png")),
                           Text("모스트챔피언",
                               style: TextStyle(color: Colors.white)),
                         ],

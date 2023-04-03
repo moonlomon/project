@@ -135,14 +135,9 @@ class _ScheduleBottomSheetState extends State<ScheduleBottomSheet> {
         )
       );
 
-      // Provider.of<CalendarStore>(context).lst.add(
-      //   CardModel(key: 1, date: widget.selectedDate, startTime: startTime, endTime: endTime, content: content,)
-      // );
-
       print("${widget.selectedDate} 데이터 저장완료");
       print("$lst");
 
-      // Navigator.of(context).pop();
       Get.back();
     }
   }

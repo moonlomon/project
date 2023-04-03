@@ -72,10 +72,55 @@ class _RegisterWidgetState extends State<RegisterWidget> {
                     if (exists) {
                       var user = users.firstWhere((user) => user.id == id && user.password == password);
                       Provider.of<CalendarStore>(context, listen: false).selectUser = user;
-                      Get.to(HomeWidget());
+                      showDialog(
+                          context: context,
+                          builder: (BuildContext context) {
+                            return AlertDialog(
+                              title: Text("로그읜 성공", style: TextStyle(fontWeight: FontWeight.w700)),
+                              content: Text("환영합니다 $id 님"),
+                              actions: [
+                                Row(
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  children: [
+                                    ElevatedButton(
+                                      onPressed: () {
+                                        Get.back();
+                                        Get.to(HomeWidget());
+                                      },
+                                      style: ElevatedButton.styleFrom(backgroundColor: Colors.black87),
+                                      child: Text("확인"),
+                                    ),
+                                  ],
+                                )
+                              ],
+                            );
+                          }
+                      );
                     } else {
                       // user not found, show error message
-                      print("로그인 실패");
+                      showDialog(
+                          context: context,
+                          builder: (BuildContext context) {
+                            return AlertDialog(
+                              title: Text("로그읜 실패", style: TextStyle(fontWeight: FontWeight.w700)),
+                              content: Text("아이디와 비밀번호를 확인주세요"),
+                              actions: [
+                                Row(
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  children: [
+                                    ElevatedButton(
+                                      onPressed: () {
+                                        Get.back();
+                                      },
+                                      style: ElevatedButton.styleFrom(backgroundColor: Colors.black87),
+                                      child: Text("확인"),
+                                    ),
+                                  ],
+                                )
+                              ],
+                            );
+                          }
+                      );
                     }
                   },
                 ),
